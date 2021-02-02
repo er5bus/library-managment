@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0.20
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "db_library:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - 3306:3306
+  
+  php:
+    build:
+      context: .
+      args:
+        TIMEZONE: ${TIMEZONE}
+    env_file:
+      - ./.env
+    ports:
+      - 5000:8000
+    tty: true
+    volumes:
+      - ./config:/var/www/project/config
+      - ./src:/var/www/project/src
+      - ./public:/var/www/project/public
+      - ./templates:/var/www/project/templates
+      - ./tests:/var/www/project/tests
+      - ./translations:/var/www/project/translations
+      - ./fixtures:/var/www/project/fixtures
+
+  adminer:
+    image: adminer
+    restart: on-failure:5
+    ports:
+      - 8080:8080
+
+volumes:
+  db_library:

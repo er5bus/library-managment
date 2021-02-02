@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title_page %}Authentication{% endblock %}</title>
+    <!-- Favicon -->
+    <link href="{{ asset('assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Open+Sans" rel="stylesheet">
+    <!-- Icons -->
+    <link href="{{ asset('assets/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- Argon CSS -->
+    <link type="text/css" href="{{ asset('assets/css/argon-design-system.css') }}" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="wrapper">
+
+      <div class="section section-hero section-shaped">
+        <div class="shape shape-style-1 shape-primary">
+          <span class="span-150"></span>
+          <span class="span-50"></span>
+          <span class="span-50"></span>
+          <span class="span-75"></span>
+          <span class="span-100"></span>
+          <span class="span-75"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+        </div>
+        <!-- Header -->
+        <div class="page-header">
+          <div class="container shape-container d-flex align-items-center py-lg">
+            <div class="col px-0">
+              <div class="row align-items-center justify-content-center">
+                <div class="row justify-content-center">
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  <div class="col-lg-5 col-md-6 pb-5 text-white">
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a class="text-white" href="{{ path('fos_user_security_logout') }}">
+                      {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="separator separator-bottom separator-skew zindex-100">
+          <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Page content -->
+      <div class="section mt--300 pb-5">
+        <div class="container">
+        {% if app.request.hasPreviousSession %}
+          {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+              <div class="flash-{{ type }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+        {% block fos_user_content %}{% endblock %}
+        </div>
+      </div>
+
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Optional JS -->
+    <script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
+    <!-- Argon JS -->
+    <script src="{{ asset('assets/js/argon.min.js') }}"></script>
+  </body>
+
+</html>

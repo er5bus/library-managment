@@ -1,0 +1,35 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-7 col-md-10">
+    <div class="card bg-secondary shadow border-2">
+      <div class="card-header pb-0 text-left border-2">
+        <h4 class="card-title">{{ 'Forgot password ?'|trans }}</h4>
+      </div>
+      <div class="card-body px-lg-5 py-lg-5 pb-4">
+        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+          <div class="form-group mb-3">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+              </div>
+              <input type="text" id="username" class="form-control form-control-alternative" placeholder="{{ 'resetting.request.username'|trans }}" name="username" required="required" />
+
+            </div>
+          </div>
+          <div class="text-center pt-3">
+            <button class="btn btn-primary-login" type="submit"><i class="fas fa-check"></i> {{ 'resetting.request.submit'|trans }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <a href="{{ path('fos_user_registration_register') }}" class="text-primary-login"><small>{{ 'Create new account ?'|trans }}</small></a>
+      </div>
+      <div class="col-6 text-right">
+        <a href="{{ path('fos_user_security_login') }}" class="text-primary-login"><small>{{ 'Already have an account ?'|trans }}</small></a>
+      </div>
+    </div>
+  </div>
+</div>
